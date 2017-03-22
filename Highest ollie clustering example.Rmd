@@ -1,0 +1,103 @@
+---
+title: "Clustering different heights of the worldwide Highest Ollie contest"
+author: "Ben M"
+date: "1/22/2017"
+output:
+  html_document:
+    theme: journal
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Skate-aid Worldwide Highest Ollie Contest 2017
+On 7th January 2017, [Skate-aid](http://www.skate-aid.org) organised a competition which involved the contestant(s). Jumping over an adjustable obstacle by Ollieing especially where they have established projects namely: 
+
+* Copenhagen, Denmark (DK)
+* Cape Town, South Africa (ZA)
+* Münster, Germany (DE)
+* Nairobi, Kenya (KE)
+* San Isidro, Costa Rica (CR)
+* Dodoma, Tanzania (TZ)
+* Bethlehem, Palestine (PS)
+* Kigali, Rwanda (RW)
+* Kampala,Uganda (UG)
+* La Paz,Bolivia (BO)
+
+Additionally, the rules to govern the event worldwide can be found here [rules](https://etrigg.com/event/skate-aid-worldwide-highest-ollie-contest-2017/49489654/). Here's a skater from Kenya jumping over the obstacle. Which is an adjustible wood plank in this case.
+
+[Photo by Robert Opiyo, skateboarder Sydney Yongo](https://www.facebook.com/photo.php?fbid=1572448036103794&set=a.406576599357616.113391.100000158393836&type=3&theater)
+
+
+'The aim of the contest was to unite skaters from all over the world and to help at-risk youths with a safe and constructive space that children require in their developmental ages.' [From page Skate-aid Shangilia Skatepark Nairobi - Kenya
+](https://www.facebook.com/skateparknairobi/photos/a.622418004449939.1073741827.622414867783586/1423265004365231/?type=3&theater)
+
+
+
+From the results of the competition. Which i acquired using this link [results](https://www.facebook.com/skateaid/posts/1379140678786498). Here are the results.
+
+1. Copenhagen: Alexander Risrad - 103 cm (highest record)
+
+2. Cape Town: Ryan Naidoo -99 cm 
+
+3. Münster: Georg G Anders -85 cm
+
+4. Nairobi: Kevin Maina - 75 cm 
+
+5. San Isidro: William Morales -70 cm
+
+6. Dodoma: Gideon -54cm 
+
+7. Bethlehem: Moyyed and Anas- 20 cm (Under 15 only)
+
+8. Kigali: 15cm (under 15 only)
+
+9. Uganda: from John Ray's post here [facebook post](https://www.facebook.com/search/top/?init=quick&q=highest%20ollie%20uganda&tas=0.20332534655961598)
+
+cm- Centimeters in height.
+
+I changed the results a bit so that they could be accomodated in the graph i've drawn below. Notice the changes in the lines of code below.
+
+## Making the dataframe
+
+```{r df}
+# making a dataframe of the results of the contest 
+ctry <- c('DK','ZA','DE','KE','CR','TZ','UG','PS','RW','US') #different countries
+hts <- c(103,99,85,75,70,54,88.4,20,15,114.3) # heights are in centimetres
+names <- c('A.Risrad(103)','R.Naidoo(99)','G.Anders(85)','K.Maina(75)','W.Morales(70)','Gideon(54)','Peter(88.4)','Moyyed & Anas(20)','Na.RW(15)','A.Garcia(114.3)')
+df <- data.frame(ctry,hts,names)
+df
+```
+
+## Drawing the plot(dendogram)
+
+```{r}
+# Make hierarichal clustering object and visualize
+dist_mat <- dist(df[,2]) # selecting the second column
+hc <- hclust(dist_mat)
+plot(hc, labels = df$names, xlab = "Different heights of individuals in different countries", main = "How close the Ollie Heights were between countries \n
+     Skate-aid International Annual Ollie Contest 2017")
+legend(x = "bottomright", legend = "Close heights are paired in the leaves.")
+```
+
+## Interpretation
+
+The graph you've seen above puts the Ollie heights together with the ones most closest being in the same leaf. That is, **Moyyes & Anas** and **Na.RW** (i named it like that because the name of the person was missing and i didn't find it anywhere). In addition, the heights of **A.Risrad** and **R.Naidoo** are really close to each other. Notice i also added the [Guinness world record](http://www.guinnessworldrecords.com/world-records/skateboarding-highest-ollie-) as well for comparison. 
+
+## Conclusion
+
+**A.Garcia** still holds the world record from Las Vegas, United States in 2011. But, if more practice & learning from mistakes could be used by **A.Risrad** and **R.Naidoo** the record could be beat as an example. Now, you know whose Ollie height was close to whom. Question is, where would yours be among these heights? Thanks for reading!
+
+## References
+[Text Mining course on Datacamp: Distance matrix and Dendrogram](https://campus.datacamp.com/courses/intro-to-text-mining-bag-of-words/adding-to-your-tm-skills?ex=3)
+
+[Data Visualization in R course on Datacamp: Adding details to plots](https://www.datacamp.com/courses/data-visualization-in-r)
+
+## To replicate use this
+
+```{r}
+sessionInfo()
+```
+
