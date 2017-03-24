@@ -71,7 +71,7 @@ df <- data.frame(ctry,hts,names)
 df
 ```
 
-## Drawing the plot(dendogram)
+## Drawing the plot(dendrogram)
 
 ```{r}
 # Make hierarichal clustering object and visualize
